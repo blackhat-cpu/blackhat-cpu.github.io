@@ -12,13 +12,21 @@
 </head>
 <body>
 
+<!-- ============ BOOT SEQUENCE ============ -->
+<div class="boot" id="bootScreen">
+  <div class="boot__lines" id="bootLines"></div>
+  <p class="boot__skip">click anywhere to skip</p>
+</div>
+
+<div class="toast" id="toast"></div>
+
 <div class="grid-overlay" aria-hidden="true"></div>
 
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header class="topbar">
   <div class="topbar__inner">
-    <a href="#top" class="mark">SR<span class="mark__dot">·</span></a>
+    <a href="#top" class="mark" id="logoMark">SR<span class="mark__dot">·</span></a>
     <nav class="nav" aria-label="Primary">
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
@@ -301,7 +309,7 @@
           <span class="term__title">guest@subhajit-portfolio: ~</span>
         </div>
         <div class="term__body" id="termBody">
-          <p class="term__line">Welcome. Type <span class="term__accent">help</span> to see what this thing can do.</p>
+          <p class="term__line">Welcome. Type <span class="term__accent">help</span> to see what this thing can do. (psst — try <span class="term__accent">coffee</span> or <span class="term__accent">party</span>)</p>
         </div>
         <div class="term__inputrow">
           <span class="term__prompt">guest@subhajit-portfolio:~$</span>
@@ -329,9 +337,9 @@
           <span class="contact__label">Email</span>
           <span class="contact__value">subhajitr879@gmail.com</span>
         </a>
-        <a class="contact__item" href="tel:+911234512345">
+        <a class="contact__item" href="tel:+916294088397">
           <span class="contact__label">Phone</span>
-          <span class="contact__value">+91 12345 12345</span>
+          <span class="contact__value">+91 62940 88397</span>
         </a>
         <a class="contact__item" href="https://www.linkedin.com/in/subhajitrouth16" target="_blank" rel="noopener">
           <span class="contact__label">LinkedIn</span>
