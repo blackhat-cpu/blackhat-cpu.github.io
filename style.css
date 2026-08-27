@@ -567,6 +567,81 @@ a{ color:inherit; text-decoration:none; }
 .diag__footer.is-visible{ opacity:1; }
 
 /* =========================================================
+   Boot sequence
+========================================================= */
+.boot{
+  position:fixed; inset:0; z-index:200; background:#04060a;
+  display:flex; flex-direction:column; align-items:flex-start; justify-content:center;
+  padding:8vw; font-family:var(--font-mono); cursor:pointer;
+  transition:opacity .5s ease, visibility .5s ease;
+}
+.boot[hidden]{ opacity:0; visibility:hidden; display:flex; pointer-events:none; }
+.boot__lines{ max-width:640px; }
+.boot__lines p{
+  margin:0 0 8px; font-size:.86rem; color:var(--text-dim); opacity:0;
+  animation:boot-in .25s ease forwards;
+}
+.boot__lines p .ok{ color:var(--green); }
+@keyframes boot-in{ from{ opacity:0; transform:translateX(-6px); } to{ opacity:1; transform:translateX(0); } }
+.boot__skip{
+  position:absolute; bottom:28px; right:32px;
+  font-family:var(--font-mono); font-size:.72rem; color:var(--text-faint); letter-spacing:.06em;
+}
+
+/* =========================================================
+   Toast
+========================================================= */
+.toast{
+  position:fixed; bottom:24px; right:24px; z-index:120;
+  display:flex; flex-direction:column; gap:10px; pointer-events:none;
+}
+.toast__item{
+  background:var(--surface-2); border:1px solid var(--border-br); border-radius:6px;
+  padding:12px 18px; font-family:var(--font-mono); font-size:.8rem; color:var(--text);
+  box-shadow:0 14px 34px -14px rgba(0,0,0,.7);
+  animation:toast-in .3s ease, toast-out .3s ease 2.4s forwards;
+}
+@keyframes toast-in{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:translateY(0); } }
+@keyframes toast-out{ to{ opacity:0; transform:translateY(-6px); } }
+
+/* =========================================================
+   Confetti
+========================================================= */
+.confetti-piece{
+  position:fixed; top:0; z-index:60; pointer-events:none; border-radius:1px;
+  animation-name:confetti-fall; animation-timing-function:ease-in; animation-fill-mode:forwards;
+}
+@keyframes confetti-fall{
+  0%{ transform:translateY(0) rotate(0deg); opacity:1; }
+  100%{ transform:translateY(90vh) rotate(540deg); opacity:0; }
+}
+
+/* =========================================================
+   Party mode (Konami easter egg)
+========================================================= */
+body.party-mode{ animation:party-hue 1.2s linear infinite; }
+@keyframes party-hue{ from{ filter:hue-rotate(0deg); } to{ filter:hue-rotate(360deg); } }
+body.party-mode .topbar{ animation:party-shake .35s ease infinite; }
+@keyframes party-shake{
+  0%,100%{ transform:translateX(0); } 25%{ transform:translateX(-2px); }
+  75%{ transform:translateX(2px); }
+}
+
+/* =========================================================
+   Button ripple + logo spin
+========================================================= */
+.btn, .term__chips button{ position:relative; overflow:hidden; }
+.ripple{
+  position:absolute; border-radius:50%; background:rgba(255,255,255,.35);
+  transform:scale(0); animation:ripple-out .55s ease-out forwards; pointer-events:none;
+}
+@keyframes ripple-out{ to{ transform:scale(1); opacity:0; } }
+
+.mark{ cursor:pointer; display:inline-block; }
+.mark.is-spinning{ animation:logo-spin .6s ease; }
+@keyframes logo-spin{ to{ transform:rotate(360deg); } }
+
+/* =========================================================
    Scroll reveal
 ========================================================= */
 .section, .hero{
