@@ -24,6 +24,7 @@
       <a href="#skills">Skills</a>
       <a href="#experience">Experience</a>
       <a href="#education">Education</a>
+      <a href="#terminal">Terminal</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="status" role="status">
@@ -41,7 +42,10 @@
       <div class="hero__copy">
         <p class="eyebrow">// MES &nbsp;·&nbsp; AUTOMATION &nbsp;·&nbsp; INDUSTRY 4.0</p>
         <h1 class="hero__name">Subhajit Routh</h1>
-        <p class="hero__role">Bridging Automation <span class="hero__amp">&amp;</span> Data Engineering</p>
+        <p class="hero__role">
+          <span class="hero__role-prefix">Currently:</span>
+          <span id="roleType" class="hero__role-type"></span><span class="hero__caret">|</span>
+        </p>
         <p class="hero__desc">
           Technical Lead driving Automation, Digitalization and IT&#8209;OT Integration —
           connecting PLC/SCADA on the plant floor to SQL, REST APIs, MQTT and OPC&#8209;UA
@@ -50,6 +54,9 @@
         <div class="hero__cta">
           <a class="btn btn--primary" href="#contact">Get in touch</a>
           <a class="btn btn--ghost" href="#experience">View experience</a>
+          <button class="btn btn--diag" id="diagBtn" type="button">
+            <span class="btn--diag__dot"></span> Run diagnostic
+          </button>
         </div>
         <div class="hero__meta">
           <span>Bengaluru, Karnataka, India</span>
@@ -58,9 +65,9 @@
         </div>
       </div>
 
-      <div class="hero__diagram" aria-hidden="true">
+      <div class="hero__diagram" id="heroDiagram" aria-hidden="true">
         <div class="scanline"></div>
-        <p class="diagram-label"><span>LIVE</span> DATA FLOW · PLANT → ENTERPRISE</p>
+        <p class="diagram-label"><span>LIVE</span> DATA FLOW · PLANT → ENTERPRISE <span class="diagram-hint">(hover the boxes)</span></p>
         <svg viewBox="0 0 520 460" class="flow-svg" xmlns="http://www.w3.org/2000/svg">
           <!-- connective paths (drawn first, under nodes) -->
           <path class="flow-line" id="p1" d="M100,60 L100,140" />
@@ -72,49 +79,44 @@
           <path class="flow-line" id="p7" d="M100,180 L100,320 L120,340" />
 
           <!-- nodes -->
-          <g class="node" transform="translate(100,40)">
+          <g class="node" transform="translate(100,40)" data-tip="Rockwell PLC + VFD — process logic &amp; motor control at the machine">
             <rect x="-58" y="-20" width="116" height="40" rx="4"/>
             <text x="0" y="5" text-anchor="middle">PLC / VFD</text>
           </g>
 
-          <g class="node" transform="translate(100,160)">
+          <g class="node" transform="translate(100,160)" data-tip="SCADA — plant-floor visualization &amp; operator control">
             <rect x="-58" y="-20" width="116" height="40" rx="4"/>
             <text x="0" y="5" text-anchor="middle">SCADA</text>
           </g>
 
-          <g class="node node--accent" transform="translate(250,250)">
+          <g class="node node--accent" transform="translate(250,250)" data-tip="KEPServer / Node-RED — the middleware bridging OT tags to IT systems">
             <rect x="-70" y="-20" width="140" height="40" rx="4"/>
             <text x="0" y="5" text-anchor="middle">KEPServer / Node-RED</text>
           </g>
 
-          <g class="node" transform="translate(400,120)">
+          <g class="node" transform="translate(400,120)" data-tip="OPC-UA — secure, standardized industrial data exchange">
             <rect x="-56" y="-20" width="112" height="40" rx="4"/>
             <text x="0" y="5" text-anchor="middle">OPC-UA</text>
           </g>
 
-          <g class="node" transform="translate(250,340)">
+          <g class="node" transform="translate(250,340)" data-tip="MQTT — lightweight pub/sub messaging for IIoT telemetry">
             <rect x="-56" y="-20" width="112" height="40" rx="4"/>
             <text x="0" y="5" text-anchor="middle">MQTT</text>
           </g>
 
-          <g class="node node--data" transform="translate(100,400)">
+          <g class="node node--data" transform="translate(100,400)" data-tip="SQL Server — relational schemas logging production &amp; process data">
             <rect x="-64" y="-20" width="128" height="40" rx="4"/>
             <text x="0" y="5" text-anchor="middle">SQL Server</text>
           </g>
 
-          <g class="node node--data" transform="translate(400,400)">
+          <g class="node node--data" transform="translate(400,400)" data-tip="Power BI — dashboards turning raw data into decisions">
             <rect x="-64" y="-20" width="128" height="40" rx="4"/>
             <text x="0" y="5" text-anchor="middle">Power BI</text>
           </g>
 
-          <g class="node node--data" transform="translate(100,340)">
-            <rect x="-70" y="-20" width="0" height="0" rx="0" style="display:none"/>
-          </g>
-
-          <g class="node node--accent" transform="translate(30,340)" style="display:none"></g>
-
           <g class="pulse" transform="translate(100,60)"><circle r="3"/></g>
         </svg>
+        <div class="node-tip" id="nodeTip"></div>
         <p class="flow-caption">plant floor <span>→</span> enterprise systems</p>
       </div>
     </div>
@@ -145,11 +147,11 @@
 
       <div class="stats" role="list">
         <div class="stat" role="listitem">
-          <span class="stat__value">5+</span>
+          <span class="stat__value" data-count="5" data-suffix="+">0</span>
           <span class="stat__label">Years in Industrial<br>Automation</span>
         </div>
         <div class="stat" role="listitem">
-          <span class="stat__value">4</span>
+          <span class="stat__value" data-count="4">0</span>
           <span class="stat__label">Roles across MES &amp;<br>Automation delivery</span>
         </div>
         <div class="stat" role="listitem">
@@ -285,10 +287,41 @@
     </div>
   </section>
 
+  <!-- ============ TERMINAL ============ -->
+  <section class="section" id="terminal">
+    <div class="section__inner">
+      <p class="section__tag">05 — Terminal</p>
+      <p class="terminal-intro">A faster way to dig through this page — type a command below.</p>
+
+      <div class="term" id="term">
+        <div class="term__bar">
+          <span class="term__dot term__dot--r"></span>
+          <span class="term__dot term__dot--y"></span>
+          <span class="term__dot term__dot--g"></span>
+          <span class="term__title">guest@subhajit-portfolio: ~</span>
+        </div>
+        <div class="term__body" id="termBody">
+          <p class="term__line">Welcome. Type <span class="term__accent">help</span> to see what this thing can do.</p>
+        </div>
+        <div class="term__inputrow">
+          <span class="term__prompt">guest@subhajit-portfolio:~$</span>
+          <input class="term__input" id="termInput" type="text" autocomplete="off" spellcheck="false" aria-label="Terminal command input">
+        </div>
+      </div>
+      <div class="term__chips">
+        <button type="button" data-cmd="whoami">whoami</button>
+        <button type="button" data-cmd="skills">skills</button>
+        <button type="button" data-cmd="experience">experience</button>
+        <button type="button" data-cmd="contact">contact</button>
+        <button type="button" data-cmd="help">help</button>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ CONTACT ============ -->
   <section class="section" id="contact">
     <div class="section__inner">
-      <p class="section__tag">05 — Contact</p>
+      <p class="section__tag">06 — Contact</p>
       <h2 class="contact__heading">Let's connect on IIoT innovation<br>and smart manufacturing.</h2>
 
       <div class="contact__grid">
@@ -313,6 +346,19 @@
   </section>
 
 </main>
+
+<!-- ============ DIAGNOSTIC MODAL ============ -->
+<div class="diag" id="diagModal" hidden>
+  <div class="diag__backdrop" data-close></div>
+  <div class="diag__panel" role="dialog" aria-modal="true" aria-labelledby="diagTitle">
+    <div class="diag__head">
+      <p class="diag__id" id="diagTitle">SYSTEM DIAGNOSTIC — RUN #<span id="diagRun">001</span></p>
+      <button class="diag__close" data-close aria-label="Close diagnostic">✕</button>
+    </div>
+    <div class="diag__body" id="diagBody"></div>
+    <div class="diag__footer" id="diagFooter"></div>
+  </div>
+</div>
 
 <footer class="footer">
   <p>© <span id="year"></span> Subhajit Routh. Built for GitHub Pages.</p>
