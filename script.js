@@ -4,6 +4,148 @@ document.getElementById('year').textContent = new Date().getFullYear();
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // =========================================================
+// Toast utility
+// =========================================================
+function showToast(msg){
+  const host = document.getElementById('toast');
+  if (!host) return;
+  const el = document.createElement('div');
+  el.className = 'toast__item';
+  el.textContent = msg;
+  host.appendChild(el);
+  setTimeout(() => el.remove(), 2800);
+}
+
+// =========================================================
+// Confetti burst
+// =========================================================
+function confettiBurst(originX, originY, count){
+  if (reducedMotion) return;
+  const colors = ['#4fd8e8', '#ffb020', '#3ddc84', '#ffffff'];
+  const n = count || 50;
+  for (let i = 0; i < n; i++){
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    const size = 5 + Math.random() * 6;
+    piece.style.width = size + 'px';
+    piece.style.height = (size * 0.4) + 'px';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.left = (originX != null ? originX : Math.random() * window.innerWidth) + 'px';
+    piece.style.top = (originY != null ? originY : -10) + 'px';
+    const duration = 1.6 + Math.random() * 1.2;
+    piece.style.animationDuration = duration + 's';
+    piece.style.transform = `translateX(${(Math.random() - 0.5) * 200}px)`;
+    document.body.appendChild(piece);
+    setTimeout(() => piece.remove(), duration * 1000 + 100);
+  }
+}
+
+// =========================================================
+// Boot sequence
+// =========================================================
+(function boot(){
+  const screen = document.getElementById('bootScreen');
+  const linesHost = document.getElementById('bootLines');
+  if (!screen || !linesHost) return;
+
+  if (reducedMotion || sessionStorage.getItem('bootPlayed')){
+    screen.hidden = true;
+    return;
+  }
+  sessionStorage.setItem('bootPlayed', '1');
+
+  const log = [
+    'INIT plant-to-cloud bridge ................ <span class="ok">OK</span>',
+    'LOADING PLC / SCADA drivers ................ <span class="ok">OK</span>',
+    'ESTABLISHING OPC-UA handshake .............. <span class="ok">OK</span>',
+    'CONNECTING MQTT broker ..................... <span class="ok">OK</span>',
+    'SYNCING SQL Server + Power BI pipelines .... <span class="ok">OK</span>',
+    'AUTHENTICATING IT-OT gateway ............... <span class="ok">OK</span>',
+    '',
+    'Welcome, recruiter / fellow engineer / curious human.',
+    'Booting portfolio.exe …'
+  ];
+
+  let i = 0;
+  function nextLine(){
+    if (i >= log.length){
+      setTimeout(() => { screen.hidden = true; }, 500);
+      return;
+    }
+    const p = document.createElement('p');
+    p.innerHTML = log[i];
+    p.style.animationDelay = '0s';
+    linesHost.appendChild(p);
+    i++;
+    setTimeout(nextLine, 160);
+  }
+  nextLine();
+
+  screen.addEventListener('click', () => { screen.hidden = true; });
+})();
+
+// =========================================================
+// Button ripple effect
+// =========================================================
+(function ripple(){
+  if (reducedMotion) return;
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest('.btn, .term__chips button');
+    if (!target) return;
+    const rect = target.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height) * 1.4;
+    const span = document.createElement('span');
+    span.className = 'ripple';
+    span.style.width = span.style.height = size + 'px';
+    span.style.left = (e.clientX - rect.left - size / 2) + 'px';
+    span.style.top = (e.clientY - rect.top - size / 2) + 'px';
+    target.appendChild(span);
+    setTimeout(() => span.remove(), 600);
+  });
+})();
+
+// =========================================================
+// Logo click easter egg
+// =========================================================
+(function logoSpin(){
+  const logo = document.getElementById('logoMark');
+  if (!logo) return;
+  const quips = ['Beep boop. 🤖', 'System nominal.', 'Compiling charm…', '01001000 01101001'];
+  let clicks = 0;
+  logo.addEventListener('click', (e) => {
+    e.preventDefault();
+    logo.classList.remove('is-spinning');
+    void logo.offsetWidth;
+    logo.classList.add('is-spinning');
+    showToast(quips[clicks % quips.length]);
+    clicks++;
+  });
+})();
+
+// =========================================================
+// Konami code — party mode
+// =========================================================
+(function konami(){
+  const seq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  let pos = 0;
+  document.addEventListener('keydown', (e) => {
+    const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if (key === seq[pos]) {
+      pos++;
+      if (pos === seq.length){
+        pos = 0;
+        document.body.classList.add('party-mode');
+        showToast('🎉 PARTY MODE ACTIVATED');
+        confettiBurst(window.innerWidth / 2, 0, 80);
+        setTimeout(() => document.body.classList.remove('party-mode'), 4000);
+      }
+    } else {
+      pos = (key === seq[0]) ? 1 : 0;
+    }
+  });
+})();
+
+// =========================================================
 // Reveal sections on scroll
 // =========================================================
 const revealTargets = document.querySelectorAll('.section, .hero');
@@ -179,6 +321,8 @@ revealTargets.forEach(el => io.observe(el));
     setTimeout(() => {
       footer.textContent = 'ALL SYSTEMS NOMINAL — READY TO DEPLOY ✓';
       footer.classList.add('is-visible');
+      const rect = modal.querySelector('.diag__panel').getBoundingClientRect();
+      confettiBurst(rect.left + rect.width / 2, rect.top, 40);
     }, totalDelay);
   }
 
@@ -248,7 +392,19 @@ revealTargets.forEach(el => io.observe(el));
     'sudo hire me': () => {
       print('Permission granted. Redirecting to contact section…', 'term__amber');
       document.getElementById('contact')?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
-    }
+    },
+    coffee: () => print(
+      '&nbsp;&nbsp;( (<br>&nbsp;&nbsp; ) )<br>&nbsp;.........<br>&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|]<br>&nbsp;\\&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/<br>&nbsp;&nbsp;`---\'<br>brewing... productivity.exe loaded ☕'
+    ),
+    party: () => {
+      document.body.classList.add('party-mode');
+      showToast('🎉 PARTY MODE ACTIVATED');
+      confettiBurst(window.innerWidth / 2, 0, 80);
+      print('Initiating unauthorized celebration…', 'term__amber');
+      setTimeout(() => document.body.classList.remove('party-mode'), 4000);
+    },
+    matrix: () => print('Wake up, Subhajit… the plant floor has you. 🟩'),
+    'rm -rf /': () => print("Nice try. This isn't that kind of portfolio.", 'term__err')
   };
 
   function run(raw){
