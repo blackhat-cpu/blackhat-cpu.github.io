@@ -55,12 +55,13 @@ function confettiBurst(originX, originY, count){
   sessionStorage.setItem('bootPlayed', '1');
 
   const log = [
-    'INIT plant-to-cloud bridge ................ <span class="ok">OK</span>',
-    'LOADING PLC / SCADA drivers ................ <span class="ok">OK</span>',
-    'ESTABLISHING OPC-UA handshake .............. <span class="ok">OK</span>',
-    'CONNECTING MQTT broker ..................... <span class="ok">OK</span>',
-    'SYNCING SQL Server + Power BI pipelines .... <span class="ok">OK</span>',
-    'AUTHENTICATING IT-OT gateway ............... <span class="ok">OK</span>',
+    'INIT MES ↔ Azure DevOps bridge ............. <span class="ok">OK</span>',
+    'CLONING repository from GitHub ............. <span class="ok">OK</span>',
+    'RUNNING Azure Pipelines build ............... <span class="ok">OK</span>',
+    'PASSING release gates / QA .................. <span class="ok">OK</span>',
+    'DEPLOYING to Kubernetes cluster .............. <span class="ok">OK</span>',
+    'SYNCING SQL Server + Power BI pipelines ..... <span class="ok">OK</span>',
+    'LOADING IT-OT / automation background ....... <span class="ok">OK</span>',
     '',
     'Welcome, recruiter / fellow engineer / curious human.',
     'Booting portfolio.exe …'
@@ -166,10 +167,10 @@ revealTargets.forEach(el => io.observe(el));
   const el = document.getElementById('roleType');
   if (!el) return;
   const roles = [
-    'Lead Engineer, MES & Automation',
-    'Bridging Automation & Data Engineering',
-    'IT-OT Integration Specialist',
-    'Industry 4.0 / IIoT Developer'
+    'Lead Engineer, MES & DevOps',
+    'Azure DevOps · CI/CD Pipelines',
+    'GitHub · SQL · Data Engineering',
+    'IT-OT Integration (Automation background)'
   ];
   if (reducedMotion) { el.textContent = roles[0]; return; }
 
@@ -284,13 +285,13 @@ revealTargets.forEach(el => io.observe(el));
   const runNum = document.getElementById('diagRun');
 
   const checks = [
-    'PLC / SCADA link',
-    'OPC-UA handshake',
-    'MQTT broker connection',
-    'SQL Server pipeline',
-    'REST API (SAP ↔ PLC)',
-    'Power BI refresh',
-    'IT-OT security gateway'
+    'GitHub repo connection',
+    'Azure Pipelines trigger',
+    'Build & unit tests',
+    'Release gate approval',
+    'Kubernetes deployment',
+    'SQL Server data sync',
+    'Power BI refresh'
   ];
 
   let runCount = 0;
@@ -364,16 +365,17 @@ revealTargets.forEach(el => io.observe(el));
       '<span class="term__accent">education</span> · <span class="term__accent">contact</span> · ' +
       '<span class="term__accent">ls</span> · <span class="term__accent">date</span> · <span class="term__accent">clear</span>'
     ),
-    whoami: () => print('Subhajit Routh — Lead Engineer, MES | Automation &amp; Digitalization | IT-OT Integration | Industry 4.0'),
+    whoami: () => print('Subhajit Routh — Lead Engineer, MES | Azure DevOps | Kubernetes | GitHub | SQL &amp; Data Engineering | IT-OT background'),
     about: () => print(
-      'Technical Lead &amp; Developer bridging Automation and Data Engineering. 5+ years across PLC/SCADA, ' +
-      'IT-OT integration, and Industry 4.0 digitalization — connecting the plant floor to enterprise systems.'
+      'Lead Engineer building CI/CD pipelines in Azure DevOps, deploying to Kubernetes, managing ' +
+      'source control on GitHub, and running SQL Server + Power BI data platforms for MES. 5+ years ' +
+      'of industrial-automation grounding (PLC/SCADA, IT-OT integration) behind it.'
     ),
     skills: () => print(
-      'Automation: Rockwell PLC/SCADA, PlantPAx, VFD Integration<br>' +
+      'MES &amp; DevOps: Azure DevOps, GitHub, CI/CD Pipelines, Kubernetes, Release Management<br>' +
+      'Data: SQL Server, Power BI, Python, Schema Design<br>' +
       'IT-OT/IIoT: OPC-UA, MQTT, KEPServer, Node-RED, REST API<br>' +
-      'Data: SQL Server, Power BI, Python<br>' +
-      'Tools: Azure DevOps, GitHub'
+      'Automation (background): Rockwell PLC/SCADA, PlantPAx, VFD Integration'
     ),
     experience: () => print(
       'Lead Engineer — L&amp;T Technology Services (May 2026–Present)<br>' +
